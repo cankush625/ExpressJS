@@ -17,7 +17,7 @@ const count = (req, res, next) => {
     next();
 }
 
-// If we want to use same middleware for app of the routes, we can achieve it by
+// If we want to use same middleware for all of the routes, we can achieve it by
 // using app.use() function. We have to pass middleware function to this app.use() function
 // and it will apply this middleware to all of the routes declared after the app.use() is
 // written

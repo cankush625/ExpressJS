@@ -14,12 +14,29 @@ const logger = (req, res, next) => {
     next();
 }
 
+const authorize = (req, res, next) => {
+    if (req.query.uname === "ankush") {
+        console.log("Authorized");
+        // This user data will be available throughout the request
+        req.user = {"id": "1", "name": "ankush", "role": "admin"};
+        next();
+        return;
+    }
+    return res.status(401).send("Unauthorized");
+}
+
 app.get("/", logger, (req, res) => {
     return res.status(200).send("Home Page");
 });
 
 app.get("/api/v1/about", logger, (req, res) => {
     return res.status(200).send("About Page");
+});
+
+// Multiple middlewares to specific path
+// Middlewares execute in the order they are passed to the array
+app.get("/api/v1/items", [authorize, logger], (req, res) => {
+   return res.status(200).send("Items Page");
 });
 
 app.listen(PORT, () => {
